@@ -13,25 +13,30 @@ interface HeaderMenuLink {
 }
 
 export const menuLinks: HeaderMenuLink[] = [
+  // {
+  //   label: "Home",
+  //   href: "/",
+  // },
+  // {
+  //   label: "Debug Contracts",
+  //   href: "/debug",
+  //   icon: <BugAntIcon className="h-4 w-4" />,
+  // },
+  // {
+  //   label: "Example UI",
+  //   href: "/example-ui",
+  //   icon: <SparklesIcon className="h-4 w-4" />,
+  // },
   {
-    label: "Home",
+    label: "ETH-SPACE",
     href: "/",
-  },
-  {
-    label: "Debug Contracts",
-    href: "/debug",
-    icon: <BugAntIcon className="h-4 w-4" />,
-  },
-  {
-    label: "Example UI",
-    href: "/example-ui",
     icon: <SparklesIcon className="h-4 w-4" />,
   },
-  {
-    label: "Block Explorer",
-    href: "/blockexplorer",
-    icon: <MagnifyingGlassIcon className="h-4 w-4" />,
-  },
+  // {
+  //   label: "Block Explorer",
+  //   href: "/blockexplorer",
+  //   icon: <MagnifyingGlassIcon className="h-4 w-4" />,
+  // },
 ];
 
 export const HeaderMenuLinks = () => {

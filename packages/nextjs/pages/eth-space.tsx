@@ -20,7 +20,7 @@ const ETHSpace: NextPage = () => {
 
     //从后端获取数据集列表
     const fetchOptions = () => {
-        return ['eth-whitepaper', 'eth-contracts'];
+        return ['eth-smart-contracts', 'eth-smart-contracts-sliced', "eth-smart-contracts-analysis"];
     };
     //获取search prompt与dataset名字后向后端发request
     const handleonClick =()=>{
@@ -50,6 +50,7 @@ const ETHSpace: NextPage = () => {
                             <div>
                                 <div>
                                     <input
+                                        style={{width: "300px"}}
                                         className="input input-bordered join-item"
                                         value={seaPrompt}
                                         onChange={(e) => {
@@ -89,9 +90,13 @@ const ETHSpace: NextPage = () => {
                                 }}>Search</button>
                             </div>
                         </div>
-                        <span className="text-sm m-10">
-                            A search question example: Give me the examples about struct. The "type" in metadata should be "struct".
-                        </span>
+                        <div className="hero-content text-left">
+                            <span className="text-sm">
+                                <p><b>A search question example: </b></p>
+                                <p>* Give me some function examples about NFT</p>
+                                <p>* 0x73c7448760517E3E6e416b2c130E3c6dB2026A1d</p>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>

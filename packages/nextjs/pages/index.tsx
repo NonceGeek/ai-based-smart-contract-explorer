@@ -20,7 +20,7 @@ const ETHSpace: NextPage = () => {
 
     //从后端获取数据集列表
     const fetchOptions = () => {
-        return ['eth-whitepaper', 'eth-contracts'];
+        return ['eth-smart-contracts', 'eth-smart-contracts-sliced', "eth-smart-contracts-analysis"];
     };
     //获取search prompt与dataset名字后向后端发request
     const handleonClick =()=>{
@@ -31,11 +31,12 @@ const ETHSpace: NextPage = () => {
             <div className="hero min-h-screen bg-base-200 bg-gradient-to-r from-green-500 to-blue-500">
                 <div className="hero-content text-center">
                     <div className="max-w-md">
-                        <h1 className="text-5xl font-bold">ETH-SPACE</h1>
-                        <p className="py-6">AI-based Smart Contract Explorer</p>
+                        <h1 className="text-2xl font-bold">AI-based Smart Contract Explorer</h1>
+                        <p className="py-6">-- Smart Contract Search Platform based on AI<br></br>
+                        -- Let AI fully assist smart contract developers</p>
                         <div className="form-control mb-6">
                             <label className="label cursor-pointer">
-                                <span className="label-text text-2xl">Search in the Public Dataset</span>
+                                <span className="label-text text-2xl">Search in the Free Dataset:</span>
                                 <input
                                     type="checkbox"
                                     className="toggle toggle-accent"
@@ -50,6 +51,7 @@ const ETHSpace: NextPage = () => {
                             <div>
                                 <div>
                                     <input
+                                        style={{width: "300px"}}
                                         className="input input-bordered join-item"
                                         value={seaPrompt}
                                         onChange={(e) => {
@@ -89,9 +91,13 @@ const ETHSpace: NextPage = () => {
                                 }}>Search</button>
                             </div>
                         </div>
-                        <span className="text-sm m-10">
-                            A search question example: Give me the examples about struct. The "type" in metadata should be "struct".
-                        </span>
+                        <div className="hero-content text-left">
+                            <span className="text-sm">
+                                <p><b>A search question example: </b></p>
+                                <p>* Give me some function examples about NFT</p>
+                                <p>* 0x73c7448760517E3E6e416b2c130E3c6dB2026A1d</p>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>

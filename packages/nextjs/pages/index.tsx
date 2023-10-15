@@ -1,15 +1,29 @@
 import { NextPage } from "next";
+import { type } from "os";
 import { useEffect, useState } from "react";
+import ReactMarkdown from 'react-markdown';
+
+//定义一个新的数据类型来记录后端返回的数据
+export type resultByDataset ={
+  dataset_id:string,
+  results:search_result[]
+}
+//定义一个数据类型来记录每个搜索结果
+export type search_result={
+  data:string,
+  metadata:{},
+}
 
 const ETHSpace: NextPage = () => {
   //在对后端发起请求后，将response的内容保存在results中
-  const [result, setResult] = useState<{data:string,metadata:{}}[]>([{data:"The search results will be shown here",metadata:{}},]);
+  //如果用户选择使用mixed模式，则使用resultByDataset来记录结果
+  const [res,setRes]=useState<resultByDataset[]>([]);
   //设置默认是在我们提供的数据集而不是公共数据集中查询
   const [qinPublic, setQinPublic] = useState(false);
   //获取目前提供的数据集选项
   const [options, setOptions] = useState<string[]>([]);
   //获取用户选择的数据集
-  const [dataset, setDataset] = useState("");
+  const [dataset, setDataset] = useState("mixed");
   //获取用户搜索的prompt
   const [seaPrompt, setSeaPrompt] = useState("");
   //仅在组件挂载时执行一次获取数据集列表
@@ -34,7 +48,40 @@ const ETHSpace: NextPage = () => {
   };
   //获取search prompt与dataset名字后向后端发request
   const handleonClick = async() => {
-    const response = await fetch("https://faasbyleeduckgo.gigalixirapp.com/api/v1/run?name=VectorAPI&func_name=search_data",{
+    //每次查询前要先把res重置为空
+    setRes([]);
+    //如果用户选择的是mix混合搜索，则需要向所有get-cluster得来的VecDB列表发请求，但我觉得其实这个逻辑在后端做会比较好，尤其如果访问量大的话，3倍请求很容易造成服务器压力过大
+    if(dataset=='mixed'){
+      options.map(async (option)=>{
+        const response = await fetch("https://faasbyleeduckgo.gigalixirapp.com/api/v1/run?name=VectorAPI&func_name=search_data",{
+        method:"POST",
+        headers:{
+          'Content-Type':'application/json; charset=utf-8',
+        },
+        body:JSON.stringify({
+          "params": [option, seaPrompt, 3]
+        })
+      });
+      const data=await response.json();
+      // console.log(data);
+      //现在把每个接口的数据都保存下来
+      const res1:resultByDataset={
+        dataset_id:data.result.dataset_id,
+        results:data.result.similarities.map((s: { data: any; metadata: any; })=>{
+          return {
+            data:s.data,
+            metadata:s.metadata
+          }
+        })
+      };
+      // console.log("this is res1:",res1);
+      // console.log("this is res before",res);
+      setRes(res=>[res1,...res]);
+      // console.log("this is res after",res);
+      });
+      // console.log(res);
+    }else{
+      const response = await fetch("https://faasbyleeduckgo.gigalixirapp.com/api/v1/run?name=VectorAPI&func_name=search_data",{
       method:"POST",
       headers:{
         'Content-Type':'application/json; charset=utf-8',
@@ -44,8 +91,19 @@ const ETHSpace: NextPage = () => {
       })
     });
     const data=await response.json();
+    const res1:resultByDataset={
+      dataset_id:data.result.dataset_id,
+      results:data.result.similarities.map((s: { data: any; metadata: any; })=>{
+        return {
+          data:s.data,
+          metadata:s.metadata
+        }
+      })
+    };
     // console.log(data.result.similarities);
-    setResult(data.result.similarities);
+    setRes(res=>[res1,...res]);
+    // console.log(res);
+    }
   };
   return (
     <div className="grid lg:grid-cols-2 flex-grow">
@@ -89,6 +147,7 @@ const ETHSpace: NextPage = () => {
                       onChange={(e) => {
                         setDataset(e.target.value);
                       }}>
+                        <option value="mixed">mixed</option>
                       {
                         options.map((option, index) => (
                           <option key={index} value={option}>{option}</option>
@@ -125,17 +184,33 @@ const ETHSpace: NextPage = () => {
       <div className="bg-gradient-to-r from-blue-500 to-green-500">
         <div className="mx-auto w-4/5 max-h-[600px] backdrop-blur-lg backdrop-filter p-10 m-10 rounded-lg opacity-80 shadow-md overflow-auto overflow-y-auto">
           <h2 className="text-4xl font-bold mb-1">Search Results</h2>
-          <span className="text-2xl m-2">
-            {result.map((res,index)=>(
-              <div key={index}>
-                <div className="divider"></div>
-                <span className="text-xl">Data</span>
-                <pre className="text-base mb-3">{res.data}</pre>
-                <span className="text-xl">Metadata</span>
-                <pre className="text-base">{JSON.stringify(res.metadata,null,2)}</pre>
-              </div>
-            ))}
-          </span>
+          <div>
+            {
+               res.map((r,index)=>(
+                <div key={index} className="collapse bg-base-200 m-5 overflow-x-auto">
+                  <input type="checkbox" className="peer" /> 
+                  <div className="collapse-title bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content">
+                    Results from {r.dataset_id}
+                  </div>
+                  <div className="collapse-content bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content"> 
+                    {
+                      r.results.map((item,index)=>(
+                        <div key={index}>
+                          <div className="divider"></div>
+                          <span className="text-xl">Data</span>
+                          <pre className="text-base mb-3">
+                            <ReactMarkdown>{item.data}</ReactMarkdown>
+                           </pre>
+                          <span className="text-xl">Metadata</span>
+                          <pre className="text-base">{JSON.stringify(item.metadata,null,2)}</pre>
+                        </div>
+                      ))
+                    }
+                  </div>
+                </div>
+              ))
+            }
+          </div>
         </div>
 
       </div>

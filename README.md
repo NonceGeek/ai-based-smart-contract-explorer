@@ -1,7 +1,7 @@
 # 🏗 AI-based Smart Contract Explorer
 
 <h4 align="center">
-  <a href="https://smart-contract-explorer.movespace.xyz/"> -[ Lanuch App]- </a>
+  <a href="https://smart-contract-explorer.movespace.xyz/"> -[ Lanuch App ]- </a>
 </h4>
 <br>
 <h4>

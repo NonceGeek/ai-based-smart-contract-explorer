@@ -22,7 +22,7 @@ See Demo Video:
 
 See Deck:
 
-> 
+> https://github.com/NonceGeek/ai-based-smart-contract-explorer/blob/main/AI-based-Smart-Contract-Explorer-Deck.pdf
 
 
 

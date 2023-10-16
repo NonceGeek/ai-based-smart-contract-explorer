@@ -6,7 +6,7 @@
 <br>
 <h4>
   Other important links:
-  <br>
+  <br><br>
   <a href="https://mumbai.polygonscan.com/address/0x9d4716dc798ceac7e40b0b692e7a2fc3a353c4b1">smart contract on Mumbai Network</a>
   <br>
   <a href="https://app.embedbase.xyz/datasets/f2e0aabc-a506-4217-8570-4c888d3d3556">VectorDB about Ethereum Smart Contract</a>

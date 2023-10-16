@@ -199,7 +199,8 @@ const ETHSpace: NextPage = () => {
                           <div className="divider"></div>
                           <span className="text-xl">Data</span>
                           <pre className="text-base mb-3">
-                            <ReactMarkdown>{item.data}</ReactMarkdown>
+                            <p>click to see more.</p>
+                            {/* <ReactMarkdown>{item.data}</ReactMarkdown> */}
                            </pre>
                           <span className="text-xl">Metadata</span>
                           <pre className="text-base">{JSON.stringify(item.metadata,null,2)}</pre>

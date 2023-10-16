@@ -13,15 +13,15 @@ interface HeaderMenuLink {
 }
 
 export const menuLinks: HeaderMenuLink[] = [
-  // {
-  //   label: "Home",
-  //   href: "/",
-  // },
-  // {
-  //   label: "Debug Contracts",
-  //   href: "/debug",
-  //   icon: <BugAntIcon className="h-4 w-4" />,
-  // },
+  {
+    label: "Home",
+    href: "/",
+  },
+  {
+    label: "vectorDBProposalGovernancer",
+    href: "/debug",
+    icon: <BugAntIcon className="h-4 w-4" />,
+  },
   // {
   //   label: "Example UI",
   //   href: "/example-ui",

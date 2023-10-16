@@ -21,17 +21,17 @@ export const ContractData = () => {
   const greetingRef = useRef<HTMLDivElement>(null);
 
   const { data: totalCounter } = useScaffoldContractRead({
-    contractName: "YourContract",
+    contractName: "VectorDBProposalGovernancer",
     functionName: "totalCounter",
   });
 
   const { data: currentGreeting, isLoading: isGreetingLoading } = useScaffoldContractRead({
-    contractName: "YourContract",
+    contractName: "VectorDBProposalGovernancer",
     functionName: "greeting",
   });
 
   useScaffoldEventSubscriber({
-    contractName: "YourContract",
+    contractName: "VectorDBProposalGovernancer",
     eventName: "GreetingChange",
     listener: logs => {
       logs.map(log => {
@@ -46,7 +46,7 @@ export const ContractData = () => {
     isLoading: isLoadingEvents,
     error: errorReadingEvents,
   } = useScaffoldEventHistory({
-    contractName: "YourContract",
+    contractName: "VectorDBProposalGovernancer",
     eventName: "GreetingChange",
     fromBlock: process.env.NEXT_PUBLIC_DEPLOY_BLOCK ? BigInt(process.env.NEXT_PUBLIC_DEPLOY_BLOCK) : 0n,
     filters: { greetingSetter: address },
@@ -55,8 +55,8 @@ export const ContractData = () => {
 
   console.log("Events:", isLoadingEvents, errorReadingEvents, myGreetingChangeEvents);
 
-  const { data: yourContract } = useScaffoldContract({ contractName: "YourContract" });
-  console.log("yourContract: ", yourContract);
+  const { data: VectorDBProposalGovernancer } = useScaffoldContract({ contractName: "VectorDBProposalGovernancer" });
+  console.log("VectorDBProposalGovernancer: ", VectorDBProposalGovernancer);
 
   const { showAnimation } = useAnimationConfig(totalCounter);
 

@@ -78,6 +78,10 @@ const config: HardhatUserConfig = {
       url: `https://polygon-mumbai.g.alchemy.com/v2/${providerApiKey}`,
       accounts: [deployerPrivateKey],
     },
+    scroll: {
+      url: `https://rpc.ankr.com/scroll_sepolia_testnet`,
+      accounts: [deployerPrivateKey],
+    },
     polygonZkEvm: {
       url: `https://polygonzkevm-mainnet.g.alchemy.com/v2/${providerApiKey}`,
       accounts: [deployerPrivateKey],

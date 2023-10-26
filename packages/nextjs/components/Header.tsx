@@ -22,21 +22,21 @@ export const menuLinks: HeaderMenuLink[] = [
     href: "/debug",
     icon: <BugAntIcon className="h-4 w-4" />,
   },
-  // {
-  //   label: "Example UI",
-  //   href: "/example-ui",
-  //   icon: <SparklesIcon className="h-4 w-4" />,
-  // },
+  {
+    label: "solidty parser demo",
+    href: "https://scaffold.movespace.xyz/solidity_code_analyzer",
+    icon: <SparklesIcon className="h-4 w-4" />,
+  },
   // {
   //   label: "ETH-SPACE",
   //   href: "/",
   //   icon: <SparklesIcon className="h-4 w-4" />,
   // },
-  // {
-  //   label: "Block Explorer",
-  //   href: "/blockexplorer",
-  //   icon: <MagnifyingGlassIcon className="h-4 w-4" />,
-  // },
+  {
+    label: "Block Explorer",
+    href: "https://sepolia-blockscout.scroll.io/address/0xEd6a0A29A962B4296bCeEC4e1E55F5Ec0474EAC7/contracts#address-tabs",
+    icon: <MagnifyingGlassIcon className="h-4 w-4" />,
+  },
 ];
 
 export const HeaderMenuLinks = () => {

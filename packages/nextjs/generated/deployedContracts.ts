@@ -1,12 +1,12 @@
 const contracts = {
   // modifile here.
-  80001: [
+  534351: [
     {
-      chainId: "80001",
-      name: "mumbai",
+      chainId: "534351",
+      name: "scrollSepolia",
       contracts: {
         VectorDBProposalGovernancer: {
-          address: "0x9d4716Dc798ceac7E40b0B692e7a2fc3A353C4B1",
+          address: "0xEd6a0A29A962B4296bCeEC4e1E55F5Ec0474EAC7",
           abi: [
             {
               inputs: [],

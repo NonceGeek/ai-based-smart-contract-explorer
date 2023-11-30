@@ -10,8 +10,9 @@ export type resultByDataset ={
 }
 //定义一个数据类型来记录每个搜索结果
 export type search_result={
+  id: string,
   data:string,
-  metadata:{},
+  metadata: {};
 }
 
 const ETHSpace: NextPage = () => {
@@ -34,17 +35,17 @@ const ETHSpace: NextPage = () => {
 
   //从后端获取数据集列表
   const fetchOptions = async () => {
-    const response = await fetch("https://faasbyleeduckgo.gigalixirapp.com/api/v1/run?name=VectorAPI&func_name=get_cluster", {
-      method: "POST",
-      headers:{
-        'Content-Type':'application/json;charset=utf-8',
-      },
-      body:JSON.stringify({
-        "params": ["ai-based-smart-contract-explorer"]
-      })
-    });
-    const data=await response.json();
-    setOptions(data.result);
+    // const response = await fetch("https://faas.movespace.xyz/api/v1/run?name=VectorAPI&func_name=get_cluster", {
+    //   method: "POST",
+    //   headers:{
+    //     'Content-Type':'application/json;charset=utf-8',
+    //   },
+    //   body:JSON.stringify({
+    //     "params": ["ai-based-smart-contract-explorer"]
+    //   })
+    // });
+    // const data=await response.json();
+    setOptions(["base-chain"]);
   };
   //获取search prompt与dataset名字后向后端发request
   const handleonClick = async() => {
@@ -53,7 +54,7 @@ const ETHSpace: NextPage = () => {
     //如果用户选择的是mix混合搜索，则需要向所有get-cluster得来的VecDB列表发请求，但我觉得其实这个逻辑在后端做会比较好，尤其如果访问量大的话，3倍请求很容易造成服务器压力过大
     if(dataset=='mixed'){
       options.map(async (option)=>{
-        const response = await fetch("https://faasbyleeduckgo.gigalixirapp.com/api/v1/run?name=VectorAPI&func_name=search_data",{
+        const response = await fetch("https://faas.movespace.xyz/api/v1/run?name=VectorAPI&func_name=search_data",{
         method:"POST",
         headers:{
           'Content-Type':'application/json; charset=utf-8',
@@ -67,10 +68,11 @@ const ETHSpace: NextPage = () => {
       //现在把每个接口的数据都保存下来
       const res1:resultByDataset={
         dataset_id:data.result.dataset_id,
-        results:data.result.similarities.map((s: { data: any; metadata: any; })=>{
+        results:data.result.similarities.map((s: { id: any ; data: any; metadata: any; })=>{
           return {
             data:s.data,
-            metadata:s.metadata
+            metadata:s.metadata,
+            id: s.id,
           }
         })
       };
@@ -81,7 +83,7 @@ const ETHSpace: NextPage = () => {
       });
       // console.log(res);
     }else{
-      const response = await fetch("https://faasbyleeduckgo.gigalixirapp.com/api/v1/run?name=VectorAPI&func_name=search_data",{
+      const response = await fetch("https://faas.movespace.xyz/api/v1/run?name=VectorAPI&func_name=search_data",{
       method:"POST",
       headers:{
         'Content-Type':'application/json; charset=utf-8',
@@ -111,8 +113,7 @@ const ETHSpace: NextPage = () => {
         <div className="hero-content text-center">
           <div className="max-w-md">
             <h1 className="text-2xl font-bold">AI-based Smart Contract Explorer</h1>
-            <p className="py-6">-- Smart Contract Search Platform based on AI<br></br>
-              -- Let AI fully assist smart contract developers</p>
+            <p className="py-6">-- Project Search & Tagger Platform based on AI </p>
             <div className="form-control mb-6">
               <label className="label cursor-pointer">
                 <span className="label-text text-2xl">Search in the Free Dataset:</span>
@@ -173,9 +174,9 @@ const ETHSpace: NextPage = () => {
             </div>
             <div className="hero-content text-left">
               <span className="text-sm">
-                <p><b>A search question example: </b></p>
-                <p>* Give me some function examples about NFT</p>
-                <p>* 0x73c7448760517E3E6e416b2c130E3c6dB2026A1d</p>
+                <p><b>Some search question examples: </b></p>
+                <p>* friend.tech</p>
+                <p>* social</p>
               </span>
             </div>
           </div>
@@ -203,6 +204,12 @@ const ETHSpace: NextPage = () => {
                            </pre>
                           <span className="text-xl">Metadata</span>
                           <pre className="text-base">{JSON.stringify(item.metadata,null,2)}</pre>
+                          <span className="text-xl">id</span>
+                          <pre className="text-base"><b>{item.id}</b></pre>
+                          <a href={"/debug?uuid=" + item.id} target="_blank" rel="noreferrer">
+                            <button className="btn join-item" >Tag this Proj!</button>
+                          </a>
+                          <button className="btn join-item" >Tag the TXs for this project! //TODO</button>
                         </div>
                       ))
                     }

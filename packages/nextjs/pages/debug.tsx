@@ -54,7 +54,9 @@ const Debug: NextPage = () => {
                 ))}
               </div>
             )}
-            <p><b>uuid: {uuid}</b></p>
+            <p>
+              <b>uuid: {uuid}</b>
+            </p>
             {contractNames.map(contractName => (
               <ContractUI
                 key={contractName}
